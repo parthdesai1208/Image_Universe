@@ -8,11 +8,22 @@
         android:id="@+id/homeFragment"
         android:name="com.parthdesai1208.imageuniverse.view.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.parthdesai1208.imageuniverse.view.detail.DetailFragment"
         android:label="Detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="ImageList"
+            app:argType="com.parthdesai1208.imageuniverse.model.ImageResponse[]" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
 </navigation>

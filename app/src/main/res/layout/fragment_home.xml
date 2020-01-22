@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <data>
+
+        <variable
+            name="model"
+            type="com.parthdesai1208.imageuniverse.view.home.HomeViewModel" />
+
+        <variable
+            name="click"
+            type="com.parthdesai1208.imageuniverse.view.home.HomeFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +33,7 @@
                 android:id="@+id/homeRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="@{model.recyclerViewVisibility}"
                 tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_home_recyclerview"
                 tools:spanCount="2" />
@@ -31,6 +43,7 @@
             android:id="@+id/homeProgressBar"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:visibility="@{model.progressBarVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:text="@{model.errorText}"
             android:textAlignment="center"
+            android:visibility="@{model.errorTextVisibility}"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@id/btnRetry"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +68,9 @@
             android:id="@+id/btnRetry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()->click.onRetryClick()}"
             android:text="Retry"
+            android:visibility="@{model.errorTextVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

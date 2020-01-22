@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.DisplayMetrics
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -57,4 +58,10 @@ fun Context.isInternetAvailable(): Boolean {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting
     }
 
+}
+
+fun calculateNoOfColumns(context: Context, columnWidthDp: Float): Int {
+    val displayMetrics: DisplayMetrics = context.resources.displayMetrics
+    val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+    return (screenWidthDp / columnWidthDp + 0.5).toInt()
 }

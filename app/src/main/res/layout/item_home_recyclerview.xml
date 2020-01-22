@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,6 +9,17 @@
             name="model"
             type="com.parthdesai1208.imageuniverse.model.ImageResponse" />
 
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="holder"
+            type="com.parthdesai1208.imageuniverse.view.home.HomeAdapter.HomeViewHolder" />
+
+        <variable
+            name="click"
+            type="com.parthdesai1208.imageuniverse.view.home.HomeAdapter" />
 
     </data>
 
@@ -23,17 +34,18 @@
             android:contentDescription="@{model.title}"
             android:padding="8dp"
             android:scaleType="fitCenter"
+            android:onClick="@{(v)->click.onImageClick(position,v)}"
             bind:layout_constraintBottom_toBottomOf="parent"
             bind:layout_constraintEnd_toEndOf="parent"
             bind:layout_constraintStart_toStartOf="parent"
-            bind:layout_constraintTop_toTopOf="parent"
-            />
+            bind:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnRetryHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Retry"
+            android:onClick="@{()->click.onRetryClick(position,holder)}"
             android:visibility="gone"
             bind:layout_constraintBottom_toBottomOf="parent"
             bind:layout_constraintEnd_toEndOf="parent"

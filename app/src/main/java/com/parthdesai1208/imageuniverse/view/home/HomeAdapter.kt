@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +19,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.snackbar.Snackbar
 import com.parthdesai1208.imageuniverse.BR
 import com.parthdesai1208.imageuniverse.R
 import com.parthdesai1208.imageuniverse.databinding.ItemHomeRecyclerviewBinding
@@ -24,7 +27,7 @@ import com.parthdesai1208.imageuniverse.model.ImageResponse
 import com.parthdesai1208.obvious.utils.circularProgressDrawable
 import com.parthdesai1208.obvious.utils.isInternetAvailable
 
-class HomeAdapter(private val context: Context) :
+class HomeAdapter(private val context: Context, private val root: ConstraintLayout) :
     PagedListAdapter<ImageResponse, HomeAdapter.HomeViewHolder>(DIFF_CALLBACK) {
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ImageResponse>() {
@@ -44,6 +47,8 @@ class HomeAdapter(private val context: Context) :
 
     }
 
+    private var list: ArrayList<ImageResponse>? = null
+    private var snackBar: Snackbar? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val binding = DataBindingUtil.inflate<ItemHomeRecyclerviewBinding>(
@@ -57,7 +62,8 @@ class HomeAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val model: ImageResponse = this.getItem(position)!!
-        holder.bind(model)
+        holder.bind(model, position, holder)
+        holder.itemHomeRecyclerViewBinding?.click = this
         loadImage(model, holder)
     }
 
@@ -106,6 +112,10 @@ class HomeAdapter(private val context: Context) :
             .into(holder.imgView!!)
     }
 
+    fun passDataForDetailScreen(list: ArrayList<ImageResponse>) {
+        this.list = ArrayList()
+        this.list = list
+    }
 
     inner class HomeViewHolder(private val binding: ItemHomeRecyclerviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -122,10 +132,34 @@ class HomeAdapter(private val context: Context) :
 
         fun bind(
             model: ImageResponse
+            , position: Int, holder: HomeViewHolder
         ) {
             binding.setVariable(BR.model, model)
+            binding.setVariable(BR.position, position)
+            binding.setVariable(BR.holder, holder)
             binding.executePendingBindings()
         }
     }
+
+    fun onRetryClick(position: Int, holder: HomeViewHolder) {
+        if (!context.isInternetAvailable()) {
+            snackBar = Snackbar.make(root, "No Internet!!", Snackbar.LENGTH_SHORT)
+            snackBar!!.show()
+            return
+        }
+        holder.imgView?.visibility = View.VISIBLE
+        holder.btnRetry?.visibility = View.GONE
+        loadImage(this.getItem(position)!!, holder)
+    }
+
+    fun onImageClick(position: Int, view: View) {
+        Navigation.findNavController(view).navigate(
+            HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                list?.toTypedArray()!!,
+                position
+            )
+        )
+    }
+
 
 }
