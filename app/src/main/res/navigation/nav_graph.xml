@@ -6,13 +6,13 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.parthdesai1208.imageuniverse.HomeFragment"
+        android:name="com.parthdesai1208.imageuniverse.view.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.parthdesai1208.imageuniverse.DetailFragment"
+        android:name="com.parthdesai1208.imageuniverse.view.detail.DetailFragment"
         android:label="Detail"
         tools:layout="@layout/fragment_detail" />
 </navigation>
