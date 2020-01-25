@@ -65,3 +65,55 @@ fun calculateNoOfColumns(context: Context, columnWidthDp: Float): Int {
     val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
     return (screenWidthDp / columnWidthDp + 0.5).toInt()
 }
+
+fun makeUpDate(input: String): String {
+    val temp = input.split("-")
+    val year = temp[0]
+    val month = temp[1]
+    val date = temp[2]
+    val monthByWord: String?
+    when (month) {
+        "01" -> {
+            monthByWord = "Jan"
+        }
+        "02" -> {
+            monthByWord = "Feb"
+        }
+        "03" -> {
+            monthByWord = "Mar"
+        }
+        "04" -> {
+            monthByWord = "Apr"
+        }
+        "05" -> {
+            monthByWord = "May"
+        }
+        "06" -> {
+            monthByWord = "June"
+        }
+        "07" -> {
+            monthByWord = "July"
+        }
+        "08" -> {
+            monthByWord = "Aug"
+        }
+        "09" -> {
+            monthByWord = "Sep"
+        }
+        "10" -> {
+            monthByWord = "Oct"
+        }
+        "11" -> {
+            monthByWord = "Nov"
+        }
+        "12" -> {
+            monthByWord = "Dec"
+        }
+        else -> {
+            monthByWord = "Dec"
+        }
+    }
+
+    return "$monthByWord $date, $year"
+}
+

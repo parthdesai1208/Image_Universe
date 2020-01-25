@@ -11,14 +11,14 @@
 
         <variable
             name="click"
-            type="com.parthdesai1208.imageuniverse.view.home.HomeFragment" />
+            type="com.parthdesai1208.imageuniverse.view.home.HomeActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.home.HomeFragment">
+        tools:context=".view.home.HomeActivity">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeHome"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="@{model.recyclerViewVisibility}"
-                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_home_recyclerview"
                 tools:spanCount="2" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
+
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +49,7 @@ class HomeAdapter(private val context: Context, private val root: ConstraintLayo
 
     private var list: ArrayList<ImageResponse>? = null
     private var snackBar: Snackbar? = null
+    private var clickListener: ImageClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val binding = DataBindingUtil.inflate<ItemHomeRecyclerviewBinding>(
@@ -65,6 +66,10 @@ class HomeAdapter(private val context: Context, private val root: ConstraintLayo
         holder.bind(model, position, holder)
         holder.itemHomeRecyclerViewBinding?.click = this
         loadImage(model, holder)
+
+        holder.imgView?.setOnClickListener {
+            clickListener?.onImageSelected(position, holder.imgView!!)
+        }
     }
 
     private fun loadImage(model: ImageResponse, holder: HomeViewHolder) {
@@ -152,14 +157,11 @@ class HomeAdapter(private val context: Context, private val root: ConstraintLayo
         loadImage(this.getItem(position)!!, holder)
     }
 
-    fun onImageClick(position: Int, view: View) {
-        Navigation.findNavController(view).navigate(
-            HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                list?.toTypedArray()!!,
-                position
-            )
-        )
+    fun setClickListener(clickListener: ImageClick) {
+        this.clickListener = clickListener
     }
 
-
+    interface ImageClick {
+        fun onImageSelected(position: Int, imageView: ImageView)
+    }
 }
